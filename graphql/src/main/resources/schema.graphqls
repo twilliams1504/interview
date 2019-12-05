@@ -1,15 +1,43 @@
 type Link {
+  id: ID!
   url: String!
   description: String!
 }
 
+type Attendee {
+  id: ID!
+  name: String!
+}
+
+type Appointment {
+  id: ID!
+  location: String!
+  attendees: [Attendee!]!
+}
+
+
+type Vote {
+    id: ID!
+    createdAt: DateTime!
+    attendee: Attendee!
+    link: Link!
+}
+
+scalar DateTime
+
 type Query {
   allLinks: [Link]
+  allAttendees: [Attendee]
+  allVotes: [Vote]
+  allAppointments: [Appointment]
 }
 
 
 type Mutation {
   createLink(url: String!, description: String!): Link
+  createAttendee(name: String!): Attendee
+  createVote(attendeeId: ID!, linkId: ID!): Vote
+  createAppointment(location:String!, attendeeIds: [ID]!): Appointment
 }
 
 schema {
